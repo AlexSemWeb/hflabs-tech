@@ -9,18 +9,21 @@ class Parking {
     if (this.checkFreeParkingPlaces() > 0) {
       this.carInParking[carNumber] = new Date().getTime();
       return "OK";
-    } else {
-      return "Ошибка";
     }
+    return "Ошибка";
   }
 
   getCar(carNumber) {
-    let timeFromPlace = new Date(
-      new Date().getTime() / 36000000 - this.carInParking[carNumber] / 36000000
-    ).getTime();
-    let price = timeFromPlace.toFixed(2) * 100;
-    delete this.carInParking[carNumber];
-    return price;
+    if (this.carInParking[carNumber]) {
+      let timeFromPlace = new Date(
+        new Date().getTime() / 36000000 -
+          this.carInParking[carNumber] / 36000000
+      ).getTime();
+      let price = timeFromPlace.toFixed(2) * 100;
+      delete this.carInParking[carNumber];
+      return price;
+    }
+    return "Такой машины нет";
   }
 
   checkFreeParkingPlaces() {
