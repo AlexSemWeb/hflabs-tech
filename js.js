@@ -6,7 +6,7 @@ class Parking {
   }
 
   placeCar(carNumber) {
-    if (this.checkFreeParkingPlaces > 0) {
+    if (this.checkFreeParkingPlaces() > 0) {
       this.carInParking[carNumber] = new Date().getTime();
       return "OK";
     } else {
@@ -15,16 +15,16 @@ class Parking {
   }
 
   getCar(carNumber) {
-    let timeFromPlace = new newDate(
-      new Date().getTime() - this.carInParking[carNumber]
-    );
-    let price = timeFromPlace.getHours() * 100;
+    let timeFromPlace = new Date(
+      new Date().getTime() / 36000000 - this.carInParking[carNumber] / 36000000
+    ).getTime();
+    let price = timeFromPlace.toFixed(2) * 100;
     delete this.carInParking[carNumber];
     return price;
   }
 
   checkFreeParkingPlaces() {
-    return this.placesInParking - this.carInParking.keys().length;
+    return this.placesInParking - Object.keys(this.carInParking).length;
   }
 }
 
